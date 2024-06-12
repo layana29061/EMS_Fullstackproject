@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 const ListEmployeeComponent = () => {
     const [employees,setEmployees]= useState([])
     const navigator= useNavigate();
-   useEffect(()=>{
+    
+    useEffect(()=>{
         listEmployees().then((response)=>{
             setEmployees(response.data);
         }).catch(error=>{
