@@ -11,3 +11,5 @@ export const getEmployee = (employeeId) =>
 export const updateEmployee = (employeeId,employee) =>
                                 axios.put(REST_API_BASE_URL + '/'+ employeeId,employee);
 //updateEmployee give updated emp details by passing employe as parameter
+export const deleteEmployee = (employeeId) =>
+    axios.delete(REST_API_BASE_URL + '/'+ employeeId);
