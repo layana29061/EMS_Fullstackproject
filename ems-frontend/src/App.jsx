@@ -18,7 +18,7 @@ function App() {
         {/* https://localhost:3000/update-employee/1 */}
         <Route path='/update-employee/:id' element={<EmployeeComponent />}></Route>
       </Routes>
-      {/* <FooterComponent /> */}
+      <FooterComponent />
     </BrowserRouter>
     </>
   )
