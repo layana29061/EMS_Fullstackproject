@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { listEmployees } from '../services/EmployeeService'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 const ListEmployeeComponent = () => {
     const [employees,setEmployees]= useState([])
     const navigator= useNavigate();
@@ -17,6 +17,11 @@ const ListEmployeeComponent = () => {
         navigator('/add-employee')
     }
 
+    function updateEmployee(id){
+        navigator(`/update-employee/${id}`)
+    }
+
+    
     // const dummydata=[
     //     {
     //         "id":1,
@@ -41,6 +46,8 @@ const ListEmployeeComponent = () => {
   return (
     <div className='container'>
         <h1 className='text-center mt-4'>List of Employees</h1>
+        <button className='btn btn-dark mt-1' onClick={addNewEmployee}>Add Employee</button>
+    
         <table className='table table-striped table-bordered mt-5'>
             <thead>
                 <tr>
@@ -48,6 +55,7 @@ const ListEmployeeComponent = () => {
                     <th>Employee First Name</th>
                     <th>Employee Last Name</th>
                     <th>Employee Email Id</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,13 +75,15 @@ const ListEmployeeComponent = () => {
                             <td>{employee.firstName}</td>
                             <td>{employee.lastName}</td>
                             <td>{employee.email}</td>
+                            <td>
+                                <button className='btn btn-info' onClick={() => updateEmployee(employee.id)}>Update</button>
+                            </td>
                         </tr>
                     )
                 }
             </tbody>
         </table>
-        <button className='btn btn-dark mb-2' onClick={addNewEmployee}>Add Button</button>
-    </div>
+        </div>
   )
 }
 

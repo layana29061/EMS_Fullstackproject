@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import { createEmployee } from '../services/EmployeeService';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { createEmployee, getEmployee } from '../services/EmployeeService';
+import { useNavigate,useParams} from 'react-router-dom';
 
 const EmployeeComponent = () => {
    const[firstName,setFirstName]= useState('');
    const[lastName,setLastName]= useState('');
    const[email,setEmail]=useState('');
 
+   const {id}= useParams();//array destructuring it returns key value pair.we need only key
    const[errors,setErrors]= useState({
     firstName:'',
     lastName:'',
@@ -14,6 +15,19 @@ const EmployeeComponent = () => {
    })
 
    const navigator= useNavigate();
+
+   useEffect(()=>{
+
+    if(id){
+        getEmployee(id).then((response)=>{
+            setFirstName(response.data.firstName);
+            setLastName(response.data.lastName);
+            setEmail(response.data.email);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+   },[id])
 
    //instead of writing seperate functions for each onchange in form handling
    //w can pass it there itself as a arrow function.
@@ -75,12 +89,21 @@ const EmployeeComponent = () => {
         return valid;
     }
 
+    function pageTitle(){
+        if(id){
+            return <h2 className='text-center pt-3'>Update Employee</h2>
+        }else{
+            return <h2 className='text-center pt-3'>Add New Employee</h2>
+        }
+    }
 
     return (
     <div className='container mt-5'>
        <div className='row'>
             <div className='card col-md-6 offset-md-3 offset-mid-3 bg-light text-dark'>
-                <h2 className='text-center pt-3'>Add New Employee</h2>
+                {
+                    pageTitle()
+                }
                 <div className='card-body'>
                     <form>
                         {/* First Name */}
